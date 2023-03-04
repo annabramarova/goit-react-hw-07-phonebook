@@ -1,13 +1,30 @@
-export const getContacts = ({contacts}) => contacts;
+import { createSelector } from "@reduxjs/toolkit";
 
-export const getFilter = ({ filter }) => filter;
+export const selectContacts = ({contacts}) => contacts.items;
 
-export const getFilteredContacts = ({ contacts, filter }) => {
+export const selectFilter = ({ filter }) => filter;
+
+export const selectContactsAmount = createSelector(
+  [selectContacts],
+  contacts => contacts.length
+);
+
+export const selectIsLoading = state => state.contacts.isLoading;
+
+export const selectError = state => state.contacts.error;
+
+export const selectFilteredContacts = createSelector([selectContacts, selectFilter], (contacts, filter) => {
     if (filter === '') {
         return contacts;
     }
-    const normalizedFilterValue = filter.toLowerCase();
-    return contacts.filter(({ name }) => {
-        return name.toLowerCase().includes(normalizedFilterValue);
-    });
-}
+    const normalizedFilter = filter.toLocaleLowerCase();
+    return contacts.filter(({ name }) =>
+      name.toLocaleLowerCase().includes(normalizedFilter)
+    );
+  }
+);
+
+export const selectFilteredTotalAmount = createSelector(
+  [selectFilteredContacts],
+  filteredContacts => filteredContacts.length
+);

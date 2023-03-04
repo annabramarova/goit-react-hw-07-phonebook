@@ -23,6 +23,15 @@ const ListText = styled.p`
 
 `;
 
+const ListEmpty = styled.p`
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+
+`;
+
+
 const Button = styled.button`
   cursor: pointer;
 padding: 8px 12px;
@@ -40,4 +49,4 @@ margin-left: auto;
     inset -2px -2px 4px rgba(0, 0, 0, 0.15);}
 `;
 
-export { List, ListItem, ListText, Button };
+export { List, ListItem, ListText, Button, ListEmpty };

@@ -5,8 +5,8 @@ import Notiflix from 'notiflix';
 import { Formik} from "formik";
 import { Input, Button, FormStyled, Label, Error} from './ContactForm.styled'
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 
 
 const schema = Yup.object().shape({
@@ -28,7 +28,7 @@ const INITIAL_VALUES = {
 }
 function ContactForm() {
     const dispatch = useDispatch();
-    const contacts = useSelector(getContacts);
+    const contacts = useSelector(selectContacts);
 
     function handleSubmit(contact, { resetForm }){
         if (contacts.findIndex(({ name }) => name.toLowerCase() === contact.name.toLowerCase()) !== -1) {
@@ -40,7 +40,8 @@ function ContactForm() {
         resetForm();
     }
     
-        return (
+    return (
+        
             <Formik initialValues={INITIAL_VALUES} validationSchema={schema} onSubmit={handleSubmit}>
                 <FormStyled autoComplete="off">
                     <Label htmlFor="name">Name
